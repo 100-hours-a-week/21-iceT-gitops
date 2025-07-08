@@ -1,25 +1,26 @@
-apiVersion: argoproj.io/v1alpha1  # Argo CD Application API 버전
-kind: Application                 # 리소스 종류
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: aws-ebs-csi-driver        # Application 이름
-  namespace: argocd                # 생성 네임스페이스
+  name: aws-ebs-csi-driver
+  namespace: argocd
 spec:
-  project: default                 # Argo CD 프로젝트
+  project: default
   source:
-    repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver  # 차트 저장소
-    chart: aws-ebs-csi-driver     # 차트 이름
-    targetRevision: latest        # 최신 버전 사용
+    repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    chart: aws-ebs-csi-driver
+    targetRevision: "2.12.0"        # ← 여기를 실제 버전 태그로 변경
     helm:
-      parameters:
-        - name: controller.serviceAccount.create  # CSI 컨트롤러 서비스어카운트 생성
-          value: "true"
-        - name: controller.serviceAccount.name    # 서비스어카운트 이름 지정
-          value: "ebs-csi-controller-sa"
-        - name: controller.serviceAccount.annotations.eks\.amazonaws\.com/role-arn  # IRSA용 IAM 역할 ARN 주석
-          value: "{{ .Values.ebsCsiIrsaRoleArn }}"
+      values: |-
+        controller:
+          serviceAccount:
+            create: true
+            name: ebs-csi-controller-sa
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::266735804784:role/AmazonEKS_EBS_CSI_Driver_IRSA
+                                         # ← 여기를 실제 IRSA Role ARN으로 변경
   destination:
-    server: https://kubernetes.default.svc  # 클러스터 API 서버 주소
-    namespace: kube-system               # kube-system 네임스페이스
+    server: https://kubernetes.default.svc
+    namespace: kube-system
   syncPolicy:
     automated:
       prune: true
