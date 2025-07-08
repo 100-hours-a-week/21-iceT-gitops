@@ -11,6 +11,7 @@ spec:
     chart: kube-prometheus-stack   # 설치할 Helm 차트 이름  
     targetRevision: "57.0.2"       # 차트 버전 (Helm의 version 필드와 대응)  
     helm:  
+      installCRDs: true
       createNamespace: true
       values: |-                   # 아래 블록 전체를 Helm에 전달할 values로 인식  
         ## Alertmanager 비활성화  
