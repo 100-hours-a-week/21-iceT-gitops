@@ -6,10 +6,9 @@ metadata:
 spec:  
   project: default                 # Argo CD 프로젝트 이름 (권한·정책 단위)  
   source:  
-    repoURL: https://prometheus-community.github.io/helm-charts  
-                                    # Helm 차트가 호스팅된 리포지토리 URL  
+    repoURL: https://prometheus-community.github.io/helm-charts  # Helm 차트가 호스팅된 리포지토리 URL  
     chart: kube-prometheus-stack   # 설치할 Helm 차트 이름  
-
+    targetRevision: "75.9.0"
     helm:  
       installCRDs: true
       createNamespace: true
