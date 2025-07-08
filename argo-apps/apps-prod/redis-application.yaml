@@ -10,7 +10,6 @@ spec:
     chart: redis
     targetRevision: "19.5.4"    # 원하는 차트 버전
     helm:
-      createNamespace: true
       values: |-
         auth:
           enabled: false               # 패스워드 없이 운영
@@ -33,3 +32,5 @@ spec:
     automated:
       prune: true      # 매니페스트에서 제거된 리소스 자동 삭제
       selfHeal: true   # 리소스 드리프트 자동 복원
+    syncOptions:
+      - CreateNamespace=true  # 네임스페이스가 없으면 애플리케이션 동기화 시 생성
