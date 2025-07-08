@@ -1,36 +1,34 @@
-apiVersion: argoproj.io/v1alpha1  # Argo CD Application API 그룹
-kind: Application                 # 리소스 종류
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: redis                     # Application 이름
-  namespace: argocd                # 네임스페이스
+  name: redis
+  namespace: argocd             # Argo CD가 설치된 네임스페이스
 spec:
-  project: default                 # 프로젝트 지정
+  project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami  # Helm 차트 리포지토리
-    chart: redis                 # 사용 차트 이름
-    targetRevision: "19.5.4"    # 차트 버전 고정
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: redis
+    targetRevision: "19.5.4"    # 원하는 차트 버전
     helm:
-      parameters:
-        - name: auth.enabled     # Redis 인증(비밀번호) 사용 여부
-          value: "false"        # 비밀번호 없이 운영
-        - name: architecture
-          value: "standalone"    # 단일 인스턴스 모드
-        - name: persistence.enabled
-          value: "true"         # 데이터 영속성 활성화
-        - name: persistence.size
-          value: "5Gi"         # PVC 크기 지정
-        - name: persistence.storageClass
-          value: "gp2"         # 사용할 StorageClass
-        - name: global.storageClass  # 전역 StorageClass 설정
-          value: "gp2"
-        - name: networkPolicy.enabled  # 네트워크 정책 사용 여부
-          value: "false"
-        - name: service.port
-          value: "6379"        # Redis 기본 포트
+      values: |-
+        auth:
+          enabled: false               # 패스워드 없이 운영
+        architecture: standalone       # 단일 인스턴스 모드
+        persistence:
+          enabled: true                # PVC 사용
+          size: 5Gi                    # 디스크 크기
+          storageClass: gp2            # PVC용 스토리지 클래스
+        global:
+          storageClass: gp2            # 전체 차트에서 사용할 기본 스토리지 클래스
+        networkPolicy:
+          enabled: false               # 네트워크 폴리시 비활성화
+        service:
+          port: 6379                   # Redis 서비스 포트
+
   destination:
-    server: https://kubernetes.default.svc  # API 서버 주소
-    namespace: redis                  # redis 네임스페이스
+    server: https://kubernetes.default.svc
+    namespace: redis                  # Redis를 배포할 네임스페이스
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: true      # 매니페스트에서 제거된 리소스 자동 삭제
+      selfHeal: true   # 리소스 드리프트 자동 복원
