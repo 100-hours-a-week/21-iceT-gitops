@@ -11,7 +11,6 @@ spec:
     targetRevision: "75.9.0"
     helm:  
       skipCrds: true         # ← CRD 파트를 건너뛰고 나머지 리소스만 설치
-      createNamespace: true
       values: |-                   # 아래 블록 전체를 Helm에 전달할 values로 인식  
         ## Alertmanager 비활성화  
         alertmanager:  
@@ -111,3 +110,5 @@ spec:
     automated:  
       prune: true                  # 매니페스트에서 제거된 리소스는 삭제  
       selfHeal: true               # 실제 상태가 drift되면 자동 복원  
+    syncOptions:
+      - CreateNamespace=true   # ← 이 옵션으로 네임스페이스 생성 허용
