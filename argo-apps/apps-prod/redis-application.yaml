@@ -10,6 +10,7 @@ spec:
     chart: redis
     targetRevision: "19.5.4"    # 원하는 차트 버전
     helm:
+      createNamespace: true
       values: |-
         auth:
           enabled: false               # 패스워드 없이 운영
