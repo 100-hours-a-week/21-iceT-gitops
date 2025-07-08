@@ -10,7 +10,6 @@ spec:
     chart: kube-prometheus-stack   # 설치할 Helm 차트 이름  
     targetRevision: "75.9.0"
     helm:  
-      skipCrds: true         # ← CRD 파트를 건너뛰고 나머지 리소스만 설치
       values: |-                   # 아래 블록 전체를 Helm에 전달할 values로 인식  
         ## Alertmanager 비활성화  
         alertmanager:  
@@ -112,3 +111,4 @@ spec:
       selfHeal: true               # 실제 상태가 drift되면 자동 복원  
     syncOptions:
       - CreateNamespace=true   # ← 이 옵션으로 네임스페이스 생성 허용
+      - ServerSideApply=true       # ← Server-Side Apply 활성화
