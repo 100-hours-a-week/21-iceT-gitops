@@ -34,3 +34,4 @@ spec:
       selfHeal: true   # 리소스 드리프트 자동 복원
     syncOptions:
       - CreateNamespace=true  # 네임스페이스가 없으면 애플리케이션 동기화 시 생성
+      - ServerSideApply=true       # ← Server-Side Apply 활성화
