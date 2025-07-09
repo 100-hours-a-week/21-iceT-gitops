@@ -62,6 +62,7 @@ spec:
                                     # HTTPS용 ACM 인증서 ARN  
               alb.ingress.kubernetes.io/backend-protocol: HTTP  
                                     # 백엔드 프로토콜을 HTTP로 지정  
+              alb.ingress.kubernetes.io/healthcheck-path: "/api/health"
             hosts:  
               - grafana.koco-test.click  
                                     # 호스트명(도메인) 리스트  
@@ -87,6 +88,7 @@ spec:
               alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'  
               alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:266735804784:certificate/5f2a8c3b-a576-4295-84c1-beb75ca562d9  
               alb.ingress.kubernetes.io/backend-protocol: HTTP  
+              alb.ingress.kubernetes.io/healthcheck-path: "/-/ready"
             hosts:  
               - prometheus.koco-test.click  
             path: /  
