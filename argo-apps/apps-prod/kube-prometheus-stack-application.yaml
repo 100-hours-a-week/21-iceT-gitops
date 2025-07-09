@@ -100,7 +100,7 @@ spec:
                 metrics_path: /actuator/prometheus  
                 static_configs:  
                   - targets:  
-                      - springboot.spring-prod.svc.cluster.local:8080  
+                      - spring-prod.spring-prod.svc.cluster.local:8080 
                                 # 스프링부트 애플리케이션의 메트릭 엔드포인트
 
   destination:  
