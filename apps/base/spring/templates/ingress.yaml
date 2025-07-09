@@ -22,7 +22,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: springboot
+                name: spring-prod
                 port:
                   number: 8080
           - path: /oauth
