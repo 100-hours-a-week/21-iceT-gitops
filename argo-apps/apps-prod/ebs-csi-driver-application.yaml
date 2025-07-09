@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
     chart: aws-ebs-csi-driver
-    targetRevision: "2.45.1"        # ← 여기를 실제 버전 태그로 변경
+    targetRevision: "2.12.0"        # ← 여기를 실제 버전 태그로 변경
     helm:
       values: |-
         controller:
