@@ -22,7 +22,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: spring-prod
+                name: {{ .Release.Name }}
                 port:
                   number: 8080
           - path: /oauth
