@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
     chart: aws-ebs-csi-driver
-    targetRevision: "2.12.0"        # ← 여기를 실제 버전 태그로 변경
+    targetRevision: "2.12.0"       
     helm:
       values: |-
         controller:
@@ -17,7 +17,7 @@ spec:
             name: ebs-csi-controller-sa
             annotations:
               eks.amazonaws.com/role-arn: arn:aws:iam::266735804784:role/AmazonEKS_EBS_CSI_Driver_IRSA
-                                         # ← 여기를 실제 IRSA Role ARN으로 변경
+                                         
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
@@ -26,4 +26,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - ServerSideApply=true       # ← Server-Side Apply 활성화
+      - ServerSideApply=true       
