@@ -98,7 +98,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: elk
+    namespace: eck
   syncPolicy:
     automated:
       prune: true
