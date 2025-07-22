@@ -8,7 +8,6 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: kibana
-    targetRevision: 12.1.3  # chart version
     helm:
       values: |
         elasticsearch:
