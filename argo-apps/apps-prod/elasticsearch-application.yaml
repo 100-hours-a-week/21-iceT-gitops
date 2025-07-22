@@ -20,7 +20,7 @@ spec:
         ## ─── persistence 설정 ─────────────────────
         persistence:
           enabled: true
-          storageClass: gp2      # 클러스터에 존재하는 SC 이름
+          storageClass: ebs-sc      # 클러스터에 존재하는 SC 이름
           size: 30Gi             # 필요 용량으로 조정
 
         ## ─── TLS self-signed 활성화 ────────────────
