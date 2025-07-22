@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1   # Argo CD가 사용하는 Application 커스텀 리소스의 API 그룹 및 버전입니다.
+kind: Application                  # 이 리소스가 Argo CD의 Application임을 선언합니다.
+metadata:
+  name: metrics-server             # Argo CD 내에서 이 애플리케이션을 식별할 이름입니다.
+  namespace: argocd                # 이 Application 리소스를 배포할 네임스페이스로, 보통 Argo CD 컨트롤러가 설치된 곳입니다.
+
+spec:
+  project: default                 # 이 Application이 속할 Argo CD 프로젝트 이름입니다. 접근 제어나 정책을 묶을 때 사용합니다.
+
+  source:                          # 배포할 소스 리포지토리(또는 차트)의 정보입니다.
+    repoURL: https://kubernetes-sigs.github.io/metrics-server/  
+                                     # Helm 차트가 호스팅된 URL입니다.
+    chart: metrics-server          # 사용할 Helm 차트의 이름입니다.
+    targetRevision: v0.8.0       # 사용할 차트의 버전(tag)입니다. 안정적인 릴리즈 버전을 지정해야 합니다.
+    helm:                          # Helm 차트 커스터마이징 블록
+      values: |-                   # 이 아래 YAML 블록 전체가 `values.yaml` 에 적용됩니다.
+        args:
+          - --kubelet-insecure-tls             # kubelet TLS 인증서를 신뢰하지 않고(Insecure) 접근하도록 설정
+          - --kubelet-preferred-address-types=InternalIP  
+                                              # kubelet에 접근할 때 내부 IP를 우선 사용하도록 지정
+
+  destination:                     # 생성된 리소스를 실제로 배포할 클러스터/네임스페이스 정보입니다.
+    server: https://kubernetes.default.svc
+                                     # 클러스터 내부 API 서버 주소(현재 클러스터)
+    namespace: kube-system         # metrics-server가 배포될 네임스페이스입니다. 클러스터 핵심(add-on) 리소스 위치
+
+  syncPolicy:                      # Argo CD 동기화(Deploy) 동작 방식을 정의합니다.
+    automated:                     # 자동 동기화 설정
+      prune: true                  # Application에서 제거된 리소스를 실제 클러스터에서도 삭제합니다.
+      selfHeal: true               # 클러스터 상태가 Git(또는 Helm) 선언 상태와 어긋날 경우 자동으로 복원합니다.
+    syncOptions:                   # 추가 동기화 옵션
+      - CreateNamespace=true       # destination.namespace가 없으면 미리 생성합니다.
+      - ServerSideApply=true       # Kubernetes Server-Side Apply를 사용하여 리소스를 패치합니다.
