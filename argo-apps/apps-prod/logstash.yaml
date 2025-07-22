@@ -14,8 +14,16 @@ spec:
         imageTag: 8.5.1
         logstashConfig:
           logstash.conf: |
-            input { stdin {} }
-            output { stdout {} }
+            input {
+              stdin {}
+            }
+            output {
+              elasticsearch {
+                hosts => ["https://elasticsearch-master.elk.svc:9200"]
+                ssl => true
+                ssl_certificate_verification => false
+              }
+            }
   destination:
     server: https://kubernetes.default.svc
     namespace: elk
