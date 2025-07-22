@@ -11,7 +11,7 @@ spec:
     repoURL: https://kubernetes-sigs.github.io/metrics-server/  
                                      # Helm 차트가 호스팅된 URL입니다.
     chart: metrics-server          # 사용할 Helm 차트의 이름입니다.
-    targetRevision: v0.8.0       # 사용할 차트의 버전(tag)입니다. 안정적인 릴리즈 버전을 지정해야 합니다.
+    targetRevision: 3.12.2        # 사용할 차트의 버전(tag)입니다. 안정적인 릴리즈 버전을 지정해야 합니다.
     helm:                          # Helm 차트 커스터마이징 블록
       values: |-                   # 이 아래 YAML 블록 전체가 `values.yaml` 에 적용됩니다.
         args:
