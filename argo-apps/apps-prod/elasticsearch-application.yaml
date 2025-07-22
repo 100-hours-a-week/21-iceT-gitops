@@ -27,6 +27,9 @@ spec:
         tls:
           selfSignedCertificate:
             enabled: true
+        ## ─── elastic 기본 계정 비밀번호 설정 ───────
+        secret:
+          password: "changeme1234"
 
   destination:
     server: https://kubernetes.default.svc
