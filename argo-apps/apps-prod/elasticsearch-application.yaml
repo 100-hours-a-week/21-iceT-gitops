@@ -8,8 +8,7 @@ spec:
   source:
     repoURL: https://github.com/elastic/helm-charts.git
     targetRevision: main
-    # ← 올바른 path: 리포지토리 루트의 elasticsearch 디렉토리
-    path: elasticsearch
+    path: elasticsearch        # <-- community chart의 디렉터리
     helm:
       values: |
         replicas: 1
@@ -18,21 +17,13 @@ spec:
           elasticsearch.yml: |
             node.store.allow_mmap: false
 
-        # persistence 설정
+        ## ─── persistence 설정 ─────────────────────
         persistence:
           enabled: true
-          volumeClaimTemplate:
-            metadata:
-              name: elasticsearch-data
-            spec:
-              storageClassName: gp2       # 클러스터 환경에 맞게 변경
-              accessModes:
-                - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 30Gi           # 필요 용량으로 조정
+          storageClass: gp2      # 클러스터에 존재하는 SC 이름
+          size: 30Gi             # 필요 용량으로 조정
 
-        # TLS self-signed 활성화
+        ## ─── TLS self-signed 활성화 ────────────────
         tls:
           selfSignedCertificate:
             enabled: true
