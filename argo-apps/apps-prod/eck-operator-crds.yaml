@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: eck-operator
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/elastic/cloud-on-k8s
+    targetRevision: main          # Git의 main 브랜치
+    path: deploy/eck-operator     # Chart.yaml 이 있는 디렉터리
+    helm:
+      releaseName: eck-operator
+      dependencyUpdate: true      # charts/ 하위 의존 차트(eck-operator-crds 등) 자동으로 업데이트
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elastic-system     # Operator와 CRD가 설치될 네임스페이스
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true      # elastic-system 네임스페이스가 없으면 생성
+      - ServerSideApply=true
