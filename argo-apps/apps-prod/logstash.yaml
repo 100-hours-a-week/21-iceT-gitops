@@ -12,7 +12,10 @@ spec:
     helm:
       values: |
         imageTag: 8.5.1
-        logstashPipeline:
+        logstashConfig:
+          logstash.yml: |
+            xpack.monitoring.enabled: true
+        
           logstash.conf: |
             input {
               stdin {}
