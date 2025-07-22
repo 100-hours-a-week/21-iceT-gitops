@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
+    repoURL: https://helm.elastic.co
     chart: kibana
-    targetRevision: 9.0.10
+    targetRevision: 8.13.4
     helm:
       values: |
         elasticsearch:
