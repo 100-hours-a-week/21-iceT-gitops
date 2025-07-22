@@ -16,6 +16,9 @@ spec:
         esConfig:
           elasticsearch.yml: |
             node.store.allow_mmap: false
+        tls:
+          selfSignedCertificate:
+            enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: elk
@@ -41,6 +44,7 @@ spec:
       values: |
         imageTag: 8.5.1
         elasticsearchHosts: "https://elasticsearch-master:9200"
+        elasticsearchSSLVerificationMode: none
         ingress:
           enabled: true
           className: alb
