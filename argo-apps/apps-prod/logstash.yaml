@@ -12,7 +12,7 @@ spec:
     helm:
       values: |
         imageTag: 8.5.1
-        logstashConfig:
+        logstashPipeline:
           logstash.conf: |
             input {
               stdin {}
