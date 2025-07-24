@@ -1,4 +1,4 @@
-apiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: apm-server
@@ -14,6 +14,7 @@ spec:
         imageTag: 8.5.1
 
         elasticsearchHosts: ["https://elasticsearch-master.elk.svc:9200"]
+
         output.elasticsearch:
           hosts: ["https://elasticsearch-master.elk.svc:9200"]
           username: "elastic"
@@ -36,15 +37,13 @@ spec:
             alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:266735804784:certificate/5f2a8c3b-a576-4295-84c1-beb75ca562d9
             alb.ingress.kubernetes.io/backend-protocol: HTTP
           hosts:
-            - host: apm.koco-test.click
-              paths:
-                - path: /
-                  pathType: Prefix
+            - name: apm.koco-test.click
+              path: /
+              pathType: Prefix
 
   destination:
     server: https://kubernetes.default.svc
     namespace: elk
-
   syncPolicy:
     automated:
       prune: true
