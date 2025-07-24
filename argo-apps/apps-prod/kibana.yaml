@@ -12,12 +12,18 @@ spec:
     helm:
       values: |
         imageTag: 8.5.1
+
         kibanaConfig:
           kibana.yml: |
             server.publicBaseUrl: "https://kibana.koco-test.click"
             elasticsearch.hosts: [ "https://elasticsearch-master.elk.svc:9200" ]
-            elasticsearch.serviceAccountToken: "AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYS10b2tlbjpzck5WRko3dVN6NmlTN1NKTXhFNWZ3"
+            elasticsearch.serviceAccountToken: "AAEAAWVsYXN0aWMva2tpYmFuYS10b2tlbjpzck5WRko3dVN6NmlTN1NKTXhFNWZ3"
             elasticsearch.ssl.verificationMode: none
+            status.allowAnonymous: true
+            xpack.encryptedSavedObjects.encryptionKey: "this_is_a_secure_32_byte_key_!!!"
+            xpack.reporting.encryptionKey: "another_32_byte_secure_key_123"
+            xpack.reporting.kibanaServer.hostname: "kibana.koco-test.click"
+
         ingress:
           enabled: true
           className: alb
@@ -28,17 +34,12 @@ spec:
             alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
             alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:266735804784:certificate/5f2a8c3b-a576-4295-84c1-beb75ca562d9
             alb.ingress.kubernetes.io/backend-protocol: HTTP
+            alb.ingress.kubernetes.io/healthcheck-path: /status
           hosts:
             - host: kibana.koco-test.click
               paths:
                 - path: /
                   pathType: Prefix
-
-        extraEnvs:
-          - name: xpack.encryptedSavedObjects.encryptionKey
-            value: "this_is_a_secure_32_byte_key_!!!"
-          - name: xpack.reporting.encryptionKey
-            value: "another_32_byte_secure_key_123"
 
   destination:
     server: 'https://kubernetes.default.svc'
