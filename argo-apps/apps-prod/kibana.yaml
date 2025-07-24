@@ -12,18 +12,14 @@ spec:
     helm:
       values: |
         imageTag: 8.5.1
-
+        elasticsearchHosts: "https://elasticsearch-master.elk.svc:9200"
         kibanaConfig:
           kibana.yml: |
             server.publicBaseUrl: "https://kibana.koco-test.click"
-            server.host: "0.0.0.0"
             elasticsearch.hosts: [ "https://elasticsearch-master.elk.svc:9200" ]
             elasticsearch.serviceAccountToken: "AAEAAWVsYXN0aWMva2tpYmFuYS10b2tlbjpzck5WRko3dVN6NmlTN1NKTXhFNWZ3"
             elasticsearch.ssl.verificationMode: none
             status.allowAnonymous: true
-            xpack.encryptedSavedObjects.encryptionKey: "this_is_a_secure_32_byte_key_!!!"
-            xpack.reporting.encryptionKey: "another_32_byte_secure_key_123"
-            xpack.reporting.kibanaServer.hostname: "kibana.koco-test.click"
 
         ingress:
           enabled: true
