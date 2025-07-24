@@ -20,7 +20,6 @@ spec:
             elasticsearch.serviceAccountToken: "AAEAAWVsYXN0aWMva2tpYmFuYS10b2tlbjpzck5WRko3dVN6NmlTN1NKTXhFNWZ3"
             elasticsearch.ssl.verificationMode: none
             status.allowAnonymous: false
-            xpack.security.enabled: true
             xpack.security.encryptionKey: "this_is_a_very_secret_32byte_key!!!!"
             xpack.encryptedSavedObjects.encryptionKey: "another_super_secret_key__32!!!!"
             xpack.reporting.encryptionKey: "yet_another_secure_key_32bytes_!!!!"
