@@ -20,8 +20,6 @@ spec:
             server.port: 5601
             
             elasticsearch.hosts: [ "https://elasticsearch-master.elk.svc:9200" ]
-            elasticsearch.username: "elastic"
-            elasticsearch.password: "changeme1234"
             elasticsearch.ssl.verificationMode: none
             elasticsearch.requestTimeout: 30000
             elasticsearch.pingTimeout: 1500
