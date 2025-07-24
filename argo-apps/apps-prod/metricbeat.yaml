@@ -33,6 +33,15 @@ spec:
               ssl:
                 enabled: true
                 verification_mode: none
+      parameters: []
+      valueFiles: []
+      passCredentials: true
+      releaseName: metricbeat
+      repositoryCredentials: []
+    plugin: {}
+    repositories:
+      - url: https://prometheus-community.github.io/helm-charts
+        name: prometheus-community
   destination:
     server: https://kubernetes.default.svc
     namespace: elk
