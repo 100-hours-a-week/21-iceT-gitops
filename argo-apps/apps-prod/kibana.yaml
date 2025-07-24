@@ -23,6 +23,8 @@ spec:
             elasticsearch.ssl.verificationMode: none
             elasticsearch.requestTimeout: 30000
             elasticsearch.pingTimeout: 1500
+
+            xpack.security.enabled: false
             
             status.allowAnonymous: true
         
