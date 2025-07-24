@@ -19,6 +19,7 @@ spec:
             elasticsearch.hosts: [ "https://elasticsearch-master.elk.svc:9200" ]
             elasticsearch.serviceAccountToken: "AAEAAWVsYXN0aWMva2tpYmFuYS10b2tlbjpzck5WRko3dVN6NmlTN1NKTXhFNWZ3"
             elasticsearch.ssl.verificationMode: none
+            status.allowAnonymous: true
 
         ingress:
           enabled: true
