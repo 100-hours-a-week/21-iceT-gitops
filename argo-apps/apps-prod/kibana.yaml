@@ -25,6 +25,8 @@ spec:
             elasticsearch.pingTimeout: 1500
             
             status.allowAnonymous: true
+
+            xpack.security.enabled: false
         
         ingress:
           enabled: true
