@@ -14,7 +14,7 @@ spec:
         imageTag: 7.17.3
         elasticsearchHosts: "https://elasticsearch-master.elk.svc:9200"
         elasticsearch:
-          serviceAccountToken: null
+          serviceAccountToken: ""
         kibanaConfig:
           kibana.yml: |
             server.publicBaseUrl: "https://kibana.koco-test.click"
