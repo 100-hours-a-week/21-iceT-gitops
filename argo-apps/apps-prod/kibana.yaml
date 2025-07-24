@@ -30,9 +30,16 @@ spec:
             elasticsearch.requestTimeout: 30000
             elasticsearch.pingTimeout: 1500
             
-            # 로깅 레벨 증가로 디버깅
-            logging.level: debug
-            logging.dest: stdout
+            # Kibana 8.x 로깅 설정
+            logging:
+              appenders:
+                console:
+                  type: console
+                  layout:
+                    type: pattern
+              root:
+                appenders: [console]
+                level: info
             
             status.allowAnonymous: true
         
