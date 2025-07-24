@@ -15,26 +15,42 @@ spec:
 
         daemonset:
           enabled: true
+          deployment: # 이건 잘못된 위치임. 제거됨.
+          metricbeatConfig:
+            metricbeat.yml: |
+              metricbeat.modules:
+                - module: system
+                  period: 10s
+                  metricsets:
+                    - cpu
+                    - load
+                    - memory
+                    - network
+                    - process
+                    - process_summary
+                  processes: ['.*']
+                  process.include_top_n:
+                    by_cpu: 5
+                    by_memory: 5
+                - module: system
+                  period: 1m
+                  metricsets:
+                    - filesystem
+                    - fsstat
+                  processors:
+                    - drop_event.when.regexp:
+                        system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
+              output.elasticsearch:
+                hosts: ["https://elasticsearch-master.elk.svc:9200"]
+                username: "elastic"
+                password: "changeme1234"
+                ssl:
+                  enabled: true
+                  verification_mode: none
+
         deployment:
           enabled: false
 
-        metricbeatConfig:
-          metricbeat.yml: |
-            metricbeat.modules:
-              - module: system
-                metricsets:
-                  - cpu
-                  - memory
-                  - network
-                  - filesystem
-                period: 10s
-            output.elasticsearch:
-              hosts: ["https://elasticsearch-master.elk.svc:9200"]
-              username: "elastic"
-              password: "changeme1234"
-              ssl:
-                enabled: true
-                verification_mode: none
   destination:
     server: https://kubernetes.default.svc
     namespace: elk
