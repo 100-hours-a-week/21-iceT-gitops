@@ -40,7 +40,7 @@ spec:
                 - path: /
                   pathType: Prefix
           service:
-            name: kibana
+            name: kibana-kibana
             port: 5601
 
   destination:
