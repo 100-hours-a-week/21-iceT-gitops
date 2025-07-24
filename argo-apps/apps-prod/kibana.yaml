@@ -21,9 +21,9 @@ spec:
             elasticsearch.ssl.verificationMode: none
             status.allowAnonymous: false
             xpack.security.enabled: true
-            xpack.security.encryptionKey: "this_is_a_very_secret_32byte_key!!"
-            xpack.encryptedSavedObjects.encryptionKey: "another_super_secret_key__32!!"
-            xpack.reporting.encryptionKey: "yet_another_secure_key_32bytes_!!"
+            xpack.security.encryptionKey: "this_is_a_very_secret_32byte_key!!!!"
+            xpack.encryptedSavedObjects.encryptionKey: "another_super_secret_key__32!!!!"
+            xpack.reporting.encryptionKey: "yet_another_secure_key_32bytes_!!!!"
 
         ingress:
           enabled: true
