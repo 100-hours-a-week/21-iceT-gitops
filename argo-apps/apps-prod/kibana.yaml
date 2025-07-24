@@ -11,7 +11,7 @@ spec:
     targetRevision: main
     helm:
       values: |
-        imageTag: 8.5.1
+        imageTag: 7.17.3
         elasticsearchHosts: "https://elasticsearch-master.elk.svc:9200"
         
         kibanaConfig:
