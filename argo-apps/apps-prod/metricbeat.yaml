@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/elastic/helm-charts.git
-    targetRevision: main
-    path: metricbeat
+    repoURL: https://helm.elastic.co  # <-- Helm repo
+    chart: metricbeat                 # <-- Helm chart name
+    targetRevision: 8.5.1             # <-- 이미지와 일치하는 버전
     helm:
       values: |
         imageTag: 8.5.1
@@ -16,6 +16,7 @@ spec:
           enabled: true
         deployment:
           enabled: false
+
         metricbeatConfig:
           metricbeat.yml: |
             metricbeat.modules:
@@ -33,10 +34,7 @@ spec:
               ssl:
                 enabled: true
                 verification_mode: none
-      # 여기 추가!
-      repos:
-        - name: prometheus-community
-          url: https://prometheus-community.github.io/helm-charts
+
   destination:
     server: https://kubernetes.default.svc
     namespace: elk
