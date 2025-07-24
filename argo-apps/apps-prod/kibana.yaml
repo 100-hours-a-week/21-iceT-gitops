@@ -6,19 +6,20 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/elastic/helm-charts.git
-    targetRevision: main
+    repoURL: 'https://github.com/elastic/helm-charts.git'
     path: kibana
+    targetRevision: main
     helm:
       values: |
         imageTag: 8.5.1
         elasticsearchHosts: "https://elasticsearch-master:9200"
         elasticsearchUsername: "elastic"
         elasticsearchPassword: "changeme1234"
-    
-        server:
-          publicBaseUrl: "https://kibana.koco-test.click"
-    
+  
+        kibanaConfig:
+          kibana.yml: |
+            server.publicBaseUrl: "https://kibana.koco-test.click"
+  
         ingress:
           enabled: true
           className: alb
@@ -35,14 +36,15 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-    
-        env:
+  
+        extraEnvs:
           - name: xpack.encryptedSavedObjects.encryptionKey
             value: "this_is_a_secure_32_byte_key_!!!"
           - name: xpack.reporting.encryptionKey
             value: "another_32_byte_secure_key_123"
+  
   destination:
-    server: https://kubernetes.default.svc
+    server: 'https://kubernetes.default.svc'
     namespace: elk
   syncPolicy:
     automated:
