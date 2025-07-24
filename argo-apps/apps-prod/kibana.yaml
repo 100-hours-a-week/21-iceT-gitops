@@ -12,12 +12,17 @@ spec:
     helm:
       values: |
         imageTag: 8.5.1
+        extraEnvs:
+          - name: ELASTICSEARCH_SERVICE_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: kibana-token-secret
+                key: KIBANA_SERVICE_TOKEN
         kibanaConfig:
           kibana.yml: |
             server.publicBaseUrl: "https://kibana.koco-test.click"
             elasticsearch.hosts: [ "https://elasticsearch-master.elk.svc:9200" ]
-            elasticsearch.username: "elastic"
-            elasticsearch.password: "changeme1234"
+            elasticsearch.serviceAccountToken: "${ELASTICSEARCH_SERVICE_TOKEN}"
             elasticsearch.ssl.verificationMode: none
         ingress:
           enabled: true
