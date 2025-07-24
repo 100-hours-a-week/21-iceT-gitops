@@ -30,7 +30,11 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-        
+        extraEnvs:
+          - name: xpack.encryptedSavedObjects.encryptionKey
+            value: "this_is_a_secure_32_byte_key_!!!"
+          - name: xpack.reporting.encryptionKey
+            value: "another_32_byte_secure_key_123"
   destination:
     server: https://kubernetes.default.svc
     namespace: elk
