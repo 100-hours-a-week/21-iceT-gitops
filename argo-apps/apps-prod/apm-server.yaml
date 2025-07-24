@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apm-server
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/elastic/helm-charts.git
+    targetRevision: main
+    path: apm-server
+    helm:
+      values: |
+        imageTag: 8.5.1
+
+        elasticsearchHosts: ["https://elasticsearch-master.elk.svc:9200"]
+        output.elasticsearch:
+          hosts: ["https://elasticsearch-master.elk.svc:9200"]
+          username: "elastic"
+          password: "changeme1234"
+          ssl:
+            enabled: true
+            verification_mode: none
+
+        apm-server:
+          host: "0.0.0.0:8200"
+
+        ingress:
+          enabled: true
+          className: alb
+          annotations:
+            alb.ingress.kubernetes.io/scheme: internet-facing
+            alb.ingress.kubernetes.io/target-type: ip
+            alb.ingress.kubernetes.io/group.name: koco-alb-group
+            alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+            alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:266735804784:certificate/5f2a8c3b-a576-4295-84c1-beb75ca562d9
+            alb.ingress.kubernetes.io/backend-protocol: HTTP
+          hosts:
+            - host: apm.koco-test.click
+              paths:
+                - path: /
+                  pathType: Prefix
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elk
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
