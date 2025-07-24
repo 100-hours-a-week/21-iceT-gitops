@@ -15,7 +15,10 @@ spec:
         elasticsearchHosts: "https://elasticsearch-master:9200"
         elasticsearchUsername: "elastic"
         elasticsearchPassword: "changeme1234"
-        serverPublicBaseUrl: "https://kibana.koco-test.click"
+    
+        server:
+          publicBaseUrl: "https://kibana.koco-test.click"
+    
         ingress:
           enabled: true
           className: alb
@@ -31,7 +34,8 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-        extraEnvs:
+    
+        env:
           - name: xpack.encryptedSavedObjects.encryptionKey
             value: "this_is_a_secure_32_byte_key_!!!"
           - name: xpack.reporting.encryptionKey
