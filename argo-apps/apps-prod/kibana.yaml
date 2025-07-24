@@ -30,15 +30,14 @@ spec:
             elasticsearch.requestTimeout: 30000
             elasticsearch.pingTimeout: 1500
             
-            # Kibana 8.x 로깅 설정
             logging:
               appenders:
-                console:
+                default:
                   type: console
                   layout:
                     type: pattern
               root:
-                appenders: [console]
+                appenders: [default]
                 level: info
             
             status.allowAnonymous: true
