@@ -18,8 +18,13 @@ spec:
 
         kibanaConfig:
           kibana.yml: |
-            server.publicBaseUrl: "https://kibana.koco-test.click"
-            elasticsearch.ssl.verificationMode: none
+            xpack.monitoring.enabled: true
+            xpack.monitoring.elasticsearch.hosts: [ "https://elasticsearch-master.elk.svc:9200" ]
+            xpack.monitoring.elasticsearch.username: "elastic"
+            xpack.monitoring.elasticsearch.password: "changeme1234"
+            xpack.monitoring.elasticsearch.ssl.verification_mode: none
+            http.host: "0.0.0.0"
+            http.port: 5601
 
         ingress:
           enabled: true
