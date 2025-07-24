@@ -23,14 +23,7 @@ spec:
           enabled: true
           storageClass: ebs-sc      # 클러스터에 존재하는 SC 이름
           size: 30Gi             # 필요 용량으로 조정
-
-        ## ─── TLS self-signed 활성화 ────────────────
-        tls:
-          selfSignedCertificate:
-            enabled: true
-        ## ─── elastic 기본 계정 비밀번호 설정 ───────
-        secret:
-          password: "changeme1234"
+        
 
   destination:
     server: https://kubernetes.default.svc
