@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: filebeat
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/elastic/helm-charts.git
+    targetRevision: main
+    path: filebeat
+    helm:
+      values: |
+        imageTag: 8.5.1
+        daemonset:
+          enabled: true
+        deployment:
+          enabled: false
+        filebeatConfig:
+          filebeat.yml: |
+            filebeat.inputs:
+              - type: log
+                enabled: true
+                paths:
+                  - /var/log/*.log
+            output.elasticsearch:
+              hosts: ["https://elasticsearch-master.elk.svc:9200"]
+              username: "elastic"
+              password: "changeme1234"
+              ssl:
+                enabled: true
+                verification_mode: none
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elk
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
